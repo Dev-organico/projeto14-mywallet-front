@@ -31,6 +31,8 @@ export default function Plus({ apiForm }) {
 
     async function sendForm(event) {
 
+        formRecord.value = formRecord.value.replace(",",'.')
+
         event.preventDefault();
 
         try {
