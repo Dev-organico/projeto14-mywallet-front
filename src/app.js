@@ -4,7 +4,9 @@ import Registration from './pages/cadastro';
 import Login from './pages/login';
 import { LoginContext } from './context/loginContext';
 import { useState } from 'react';
-import axios from 'axios';
+import Home from './pages/home';
+import Minus from './pages/nova-saida';
+import Plus from './pages/nova-entrada';
 
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
 });
 
   const [apiForm , setApiForm] = useState({})
-  
+
   const [form, setForm] = useState({
     email: "",
     password: ""
@@ -37,12 +39,19 @@ function App() {
           <Route path='/cadastro' element={<Registration
           formUser={formUser}
           setFormUser={setFormUser}
-
           />}/>
-          {/* <Route path='/habitos' element={<Habits/>}/>
-          <Route path='/hoje' element={<Today/>}/>
-          <Route path='/historico' element={<Historic/>}/>
- */}
+          <Route path='/home' element={<Home
+          apiForm={apiForm}
+          />}/>
+          <Route path='/nova-entrada' element={<Plus
+          apiForm={apiForm}
+          />}/>
+          <Route path='/nova-saida' element={<Minus
+          apiForm={apiForm}
+          />}/>
+         
+         
+
       </Routes>
     </BrowserRouter>
     </LoginContext.Provider>

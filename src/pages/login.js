@@ -12,8 +12,6 @@ export default function Login({ setForm, form, setApiForm }) {
     const navigate = useNavigate()
 
 
-
-
     function handleForm(e) {
         setForm({
             ...form,
@@ -21,13 +19,29 @@ export default function Login({ setForm, form, setApiForm }) {
         })
     }
 
-    function sendForm(event) {
+    async function sendForm(event) {
+
         event.preventDefault();
-        alert("botão entrar")
-        /* axios.post(`${URL}auth/login`, form).then((el) => {
-            setApiForm(el.data)
-            navigate("/hoje")
-        }).catch(() => alert("não foi")) */
+        
+        try {
+
+            const tokenObj = await axios.post(`${process.env.REACT_APP_API_URL}`, form)
+
+            console.log(tokenObj)
+
+            setApiForm(tokenObj.data)
+
+            navigate("/home")
+
+            
+        } catch (err) {
+            alert(err.response.data)
+        }
+
+        setForm({
+            email: "",
+            password: ""
+        })
     }
 
 
@@ -38,12 +52,12 @@ export default function Login({ setForm, form, setApiForm }) {
             <img src={myWallet} />
             <Form>
                 <form onSubmit={sendForm}>
-                    <input data-test="email-input" placeholder="E-mail" type="email" name="email" onChange={handleForm} value={form.email} />
-                    <input data-test="password-input" placeholder="Senha" type="password" name="password" onChange={handleForm} value={form.password} />
-                    <button data-test="login-btn" type="submit">Entrar</button>
+                    <input  placeholder="E-mail" type="email" name="email" onChange={handleForm} value={form.email} />
+                    <input  placeholder="Senha" type="password" name="password" onChange={handleForm} value={form.password} />
+                    <button type="submit">Entrar</button>
                 </form>
             </Form>
-            <Link data-test="signup-link" to={"/cadastro"} style={{ textDecoration: 'none' }}>
+            <Link to={"/cadastro"} style={{ textDecoration: 'none' }}>
                 <p>Primeira vez? Cadastre-se!</p>
             </Link>
 
